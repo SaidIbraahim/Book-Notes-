@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Notes</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <h1>Book Notes</h1>
+
+  <!-- Button to toggle the Add Book form -->
+  <button class="toggle-form-btn" onclick="toggleForm()">Add a New Book</button>
+
+  <!-- Form is hidden by default -->
+  <form id="addBookForm" action="/books" method="POST" style="display:none;">
+    <input type="text" name="title" placeholder="Title" required>
+    <input type="text" name="author" placeholder="Author" required>
+    <input type="number" name="rating" placeholder="Rating (0-5)" step="0.1" required>
+    <input type="date" name="read_date" required>
+    <button type="submit">Add Book</button>
+  </form>
+  
+  <h2>Books</h2>
+  <div>
+    <a href="/books?sort_by=read_date">Sort by Recency</a> | 
+    <a href="/books?sort_by=rating">Sort by Rating</a> | 
+    <a href="/books?sort_by=title">Sort by Title</a>
+  </div>
+  <ul>
+    <% books.forEach(book => { %>
+      <li>
+        <img src="<%= book.cover_url %>" alt="Cover" width="100" onerror="this.src='/path/to/placeholder.jpg';">
+        <div>
+          <h3><%= book.title %> by <%= book.author %></h3>
+          <p>Rating: <%= book.rating %></p>
+          <p>Read Date: <%= book.read_date %></p>
+        </div>
+        <div>
+          <form action="/books/<%= book.id %>" method="POST">
+            <input type="text" name="title" value="<%= book.title %>">
+            <input type="text" name="author" value="<%= book.author %>">
+            <input type="number" name="rating" value="<%= book.rating %>" step="0.1">
+            <input type="date" name="read_date" value="<%= book.read_date %>" required>
+            <button type="submit">Update</button>
+          </form>
+          <form action="/books/delete/<%= book.id %>" method="POST">
+            <button type="submit">Delete</button>
+          </form>
+        </div>
+      </li>
+    <% }) %>
+  </ul>
+
+
+  <script>
+    // JavaScript to toggle the form visibility
+    function toggleForm() {
+      const form = document.getElementById('addBookForm');
+      if (form.style.display === 'none' || form.style.display === '') {
+        form.style.display = 'block';
+      } else {
+        form.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
