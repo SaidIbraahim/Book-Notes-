@@ -41,7 +41,7 @@ Here are some screenshots of the application:
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/book-notes-app.git
+   git clone https://github.com/saidibraahim/book-notes-app.git
    ```
 2. **Install Dependencies**
    ```bash
